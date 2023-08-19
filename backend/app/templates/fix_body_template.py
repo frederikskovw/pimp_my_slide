@@ -35,7 +35,9 @@ FIX_BODY_TEMPLATE = {
 
         **Revised Slide using Dot-Dash method**:
         Title: Cost-Saving Measures
-        Body: Barclays could save over $500m in OPEX by replacing branches with ATMs.        
+        Body: Barclays could save over $500m in OPEX by replacing branches with ATMs.
+
+        NOTE: Your output language will be the same as whatever the input language is.        
         """,
 
     "human_message_example_inject": """
@@ -66,22 +68,22 @@ FIX_BODY_TEMPLATE = {
 
     "ai_message_example_inject": """ 
         <br><br><b>Slide 1</b>
-        <br>Lead in: Chamberlain Coffee increases revenue in May
-        <br>Body:
+        <br><u>Lead-in:</u> Chamberlain Coffee increases revenue in May
+        <br><u>Body:</u>
         <br>• Revenue at DKK 900.9M in May, above targeted DKK 800M. Due to strong retail sales.
         <br>• EBITDA at DKK -386.5M in May, above expected DKK -388.2M. Driven by below-budget salary costs.
         <br>• Successfully launched RTD with on-time delivery in 4,000 Walmart stores. Mostly positive customer feedback, resulting in addition of bagged coffee in 1,900 Walmart stores and dialogues other national retailers (Kroger, Albertsons, etc.). >
 
         <br><br><b>Slide 2</b>
-        <br>Lead in: Nordgreen behind budget ytd on revenue and EBITDA
-        <br>Body:
+        <br><u>Lead-in:</u> Nordgreen behind budget ytd on revenue and EBITDA
+        <br><u>Body:</u>
         <br>• Realized DKK 434.5M revenue in May, below budget. Split of 390M DKK in B2C and 44.5M in B2B.
         <br>• EBITDA at DKK -5M, slightly below budgeted -4M. Due to delayed savings from fulfillment initiatives.
         <br>• Expecting to meet original FY'23 budget for both revenue and EBITDA.
 
         <br><br><b>Slide 3</b>
-        <br>Lead in: USPS has a largely fixed-cost network business which magnifies the impact of loss drivers
-        <br>Body:          
+        <br><u>Lead-in:</u> USPS has a largely fixed-cost network business which magnifies the impact of loss drivers
+        <br><u>Body:</u>          
         <br>• 78% increase in revenue to DKK 5M (highest ever). Driven by seasonality, performance in both B2B and B2C. But still below budget due to:
             <br>○ DKK 500K B2B deal loss post-signature.
             <br>○ Online performance hit by ios14 tracking issue.

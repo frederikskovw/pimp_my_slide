@@ -73,7 +73,7 @@ p {
 }
 
 .inverse-symbol {
-    color: darkslategray;
+    color: #021634;
 }
 
 .material-symbols-outlined:hover {
@@ -82,13 +82,13 @@ p {
 }
 
 .inverse-symbol:hover {
-    color: darkslategray;
+    color: #021634;
 }
 
 .search-container {
     display: flex;
     align-items: center;
-    color: darkslategray;
+    color: #021634;
     background-color: #fff;
     border: none;
     outline: none;
@@ -114,13 +114,13 @@ p {
 
 
 .search-symbol {
-    color: darkslategray;
+    color: #021634;
     position: absolute;
     right: 20px;
 }
 
 .search-symbol:hover {
-    color: darkslategray;
+    color: #021634;
 }
 
 
@@ -135,7 +135,7 @@ p {
     padding: 5px 10px 5px 10px;
     border-radius: 20px;
     cursor: pointer;
-    color: darkslategray;
+    color: #021634;
 } 
 
 .spinner {
@@ -161,13 +161,13 @@ p {
 }
 
 .card p {
-    color: darkslategray;
+    color: #021634;
 }
 
 .card:hover h2,
 .card:hover h3,
 .card:hover p {
-      color: darkslategray;
+      color: #021634;
   }
   
 textarea, input[type="text"] {
@@ -176,12 +176,12 @@ textarea, input[type="text"] {
     border-radius: 5px;
     margin-bottom: 10px;
     border: none;
-    border-bottom: 1px solid darkslategrey;
+    border-bottom: 1px solid #021634;
     outline: none;
 }
 
 textarea:focus, input[type="text"]:focus {
-    border-bottom: 1px solid darkslategray;
+    border-bottom: 1px solid #021634;
 }
 
 button {
@@ -190,7 +190,7 @@ button {
     justify-content: center;
     background-color: white;
     border: none;
-    color: darkslategray;
+    color: #021634;
     padding: 8px 12px;
     border-radius: 20px;
     cursor: pointer;
@@ -204,7 +204,7 @@ button:hover {
   }
   
 button:active {
-    background-color: darkslategray;
+    background-color: #021634;
     color: white;
   }
 

@@ -21,7 +21,7 @@ nav {
     justify-content: space-around;
     align-items: center;
     height: 10vh;
-    box-shadow: 0 0 10px 0 rgb(28, 49, 49);
+    box-shadow: 0 0 10px 0 #010e21;
     margin-bottom: 30px;
 }
 </style>

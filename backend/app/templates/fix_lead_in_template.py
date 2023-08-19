@@ -35,6 +35,8 @@ FIX_LEAD_IN_TEMPLATE = {
         - Convert passive voice to active.
         - Strengthen tone by using assertive language.
         - Replace complex words with simpler alternatives.       
+
+        NOTE: Your output language will be the same as whatever the input language is.
         """,
 
     "human_message_example_inject": """
@@ -72,21 +74,21 @@ FIX_LEAD_IN_TEMPLATE = {
 
     "ai_message_example_inject": """ 
         <br><br><b>Slide 1</b>
-        <br>Lead in: Chamberlain Coffee increases revenue in May, driven by successful launch in RTD and lower-than-expected salary costs
-        <br>Body:
+        <br><u>Lead-in:</u> Chamberlain Coffee increases revenue in May, driven by successful launch in RTD and lower-than-expected salary costs
+        <br><u>Body:</u>
         <br>• Revenue at DKK 900.9M in May, above targeted DKK 800M. Due to strong retail sales.
         <br>• EBITDA at DKK -386.5M in May, above expected DKK -388.2M. Driven by below-budget salary costs.
         <br>• Successfully launched RTD with on-time delivery in 4,000 Walmart stores. Mostly positive customer feedback, resulting in addition of bagged coffee in 1,900 Walmart stores and dialogues other national retailers (Kroger, Albertsons, etc.).
 
         <br><br><b>Slide 2</b>
-        <br>Lead in: Nordgreen's below budgeted revenue and EBITDA in May, driven by slow materialization of cost-saving fulfillment intiatives
-        <br>Body:
+        <br><u>Lead-in:</u> Nordgreen's below budgeted revenue and EBITDA in May, driven by slow materialization of cost-saving fulfillment intiatives
+        <br><u>Body:</u>
         <br>• Realized DKK 434.5M revenue in May, below budget. Split of 390M DKK in B2C and 44.5M in B2B.
         <br>• EBITDA at DKK -5M, slightly below budgeted -4M. Due to delayed savings from fulfillment initiatives.
         <br>• Expecting to meet original FY'23 budget for both revenue and EBITDA.
 
         <br><br><b>Slide 3</b>
-        <br>Lead in: Messy Weekend below budgeted revenue in May due to several factors, but recorded profits in line with long-term guidance. Investment from Magasin to boost B2B in 2023
+        <br><u>Lead-in:</u> Messy Weekend below budgeted revenue in May due to several factors, but recorded profits in line with long-term guidance. Investment from Magasin to boost B2B in 2023
         <br><u>Body:</u>          
         <br>• 78% increase in revenue to DKK 5M (highest ever). Driven by seasonality, performance in both B2B and B2C. But still below budget due to:
             <br>○ DKK 500K B2B deal loss post-signature.
@@ -96,10 +98,10 @@ FIX_LEAD_IN_TEMPLATE = {
         <br>• Investment from Magasin for Messy Weekend, expecting to drive B2B sales in 2023.
 
         <br><br><b>Slide 4</b>
-        <br>Lead in: Ronaldo would be a great fit for a non-alcoholics brand, given his commitment to health, personal experience, and religious alignment of fanbase.
+        <br><u>Lead-in:</u> Ronaldo would be a great fit for a non-alcoholics brand, given his commitment to health, personal experience, and religious alignment of fanbase.
         <br><u>Body:</u>          
-        <br>- dedication to health
-        <br>- dad alcoholic
-        <br>- religious beliefs where he reides
+        <br>• dedication to health
+        <br>• dad alcoholic
+        <br>• religious beliefs where he reides
         """,
 }
