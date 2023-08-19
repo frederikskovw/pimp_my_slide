@@ -8,7 +8,7 @@ const sendSlidesToBackend = async (endpoint, slides, useGPT4, wordDoc=null) => {
         formData.append('slides', JSON.stringify(slides));
     }
     formData.append('useGPT4', useGPT4);
-    const response = await axios.post("http://127.0.0.1:5000/" + endpoint, formData, {
+    const response = await axios.post("https://pimp-my-slide-backend.herokuapp.com/" + endpoint, formData, {
         headers: {
             'Content-Type': 'multipart/form-data'
         }
