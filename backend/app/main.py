@@ -9,11 +9,13 @@ import logging
 import io
 import json
 from celery import Celery
+from celery_config import CELERY_BROKER_URL
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "https://main--teal-conkies-5d8062.netlify.app"}})
 logging.basicConfig(level=logging.DEBUG)
 
+app.config['CELERY_BROKER_URL'] = CELERY_BROKER_URL
 celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
 celery.conf.update(app.config)
 
