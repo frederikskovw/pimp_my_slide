@@ -1,5 +1,5 @@
 import os
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, make_response
 from flask_cors import CORS
 from dotenv import load_dotenv
 from models import FixSlides
@@ -8,25 +8,30 @@ from docx import Document
 import logging
 import io
 import json
+from celery import Celery
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "https://main--teal-conkies-5d8062.netlify.app"}})
 logging.basicConfig(level=logging.DEBUG)
 
+celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
+celery.conf.update(app.config)
+
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
-@app.route('/fix-slides', methods=['POST'])
-def fix_slides():
+# Function to initiate the celery task for fixing slides
+@celery.task(bind=True)
+def fix_slides_task(self, files, form):
     logging.info("Received a request at /fix-slides")
-    if 'wordDoc' in request.files:
-        print("Word doc found")
-        word_file = request.files['wordDoc']
+    if 'wordDoc' in files:
+        logging.info("Word doc found")
+        word_file = files['wordDoc']
         doc = Document(io.BytesIO(word_file.read()))
         slides_string = "\n\n".join([para.text for para in doc.paragraphs if para.text])
     else:
-        print("Slides found")
-        slides = json.loads(request.form['slides'])
+        logging.info("Word doc not found")
+        slides = json.loads(form['slides'])
         slides_string = ""
         for i, slide in enumerate(slides):
             slides_string += f"Slide {i+1}\n"
@@ -34,7 +39,7 @@ def fix_slides():
             slides_string += f"Body: < {slide['content']} >\n"
             slides_string += f"Data: < {slide['data']} >\n\n"
 
-    use_gpt4 = request.form['useGPT4'] == "true"
+    use_gpt4 = form['useGPT4'] == "true"
     model_name = "gpt-4" if use_gpt4 else "gpt-3.5-turbo-16k"
     logging.info("Using model: " + model_name)
 
@@ -48,13 +53,19 @@ def fix_slides():
     logging.info("Calling model to fix data")
     slides_string_updated_body_and_lead_ins_and_review_data = fix_slides_instance.call_model(slides_string_updated_body_and_lead_ins, REVIEW_DATA_TEMPLATE)
 
-    return jsonify(slides_string_updated_body_and_lead_ins_and_review_data)
+    return slides_string_updated_body_and_lead_ins_and_review_data
 
-@app.route('/review-flow', methods=['POST'])
-def review_flow():
+@app.route('/fix-slides', methods=['POST'])
+def fix_slides():
+    task = fix_slides_task.apply_async(args=[request.files, request.form])
+    return jsonify({"message": "Processing request", "task_id": task.id}), 202
+
+# Function to initiate the celery task for review flow
+@celery.task(bind=True)
+def review_flow_task(self, form):
     logging.info("Received a request at /review-flow")
-    updated_slides = json.loads(request.form['slides'])
-    use_gpt4 = request.form['useGPT4'] == "true"
+    updated_slides = json.loads(form['slides'])
+    use_gpt4 = form['useGPT4'] == "true"
 
     model_name = "gpt-4" if use_gpt4 else "gpt-3.5-turbo-16k"
     logging.info("Using model: " + model_name)
@@ -66,16 +77,22 @@ def review_flow():
     logging.info("Calling model to review vertical flow")
     vertical_flow_review = fix_slides_instance.call_model(updated_slides, REVIEW_VERTICAL_FLOW_TEMPLATE)
 
-    return jsonify({
+    return {
         "horizontalFlowReview": horizontal_flow_review,
         "verticalFlowReview": vertical_flow_review
-    })
+    }
 
-@app.route('/write-execsum', methods=['POST'])
-def write_execsum():
+@app.route('/review-flow', methods=['POST'])
+def review_flow():
+    task = review_flow_task.apply_async(args=[request.form])
+    return jsonify({"message": "Processing request", "task_id": task.id}), 202
+
+# Function to initiate the celery task for writing exec sum
+@celery.task(bind=True)
+def write_execsum_task(self, form):
     logging.info("Received a request at /write-execsum")
-    updated_slides = json.loads(request.form['slides'])
-    use_gpt4 = request.form['useGPT4'] == "true"
+    updated_slides = json.loads(form['slides'])
+    use_gpt4 = form['useGPT4'] == "true"
 
     model_name = "gpt-4" if use_gpt4 else "gpt-3.5-turbo-16k"
     logging.info("Using model: " + model_name)
@@ -85,7 +102,12 @@ def write_execsum():
     logging.info("Calling model to write exec sum")
     exec_sum = fix_slides_instance.call_model(updated_slides, WRITE_EXECSUM_TEMPLATE)
 
-    return jsonify(exec_sum)
+    return exec_sum
+
+@app.route('/write-execsum', methods=['POST'])
+def write_execsum():
+    task = write_execsum_task.apply_async(args=[request.form])
+    return jsonify({"message": "Processing request", "task_id": task.id}), 202
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
