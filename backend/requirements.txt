@@ -3,4 +3,3 @@ flask_cors
 python-dotenv
 python-docx
 langchain
-logging
