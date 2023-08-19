@@ -99,10 +99,15 @@ export default {
 
     const fixSlides = async () => {
       loading.value = true;
-      if (wordDoc.value) {
+      try {
+        if (wordDoc.value) {
           updatedSlides.value = await sendSlidesToBackend('fix-slides', null, useGPT4.value, wordDoc.value);
-      } else {
+        } else {
           updatedSlides.value = await sendSlidesToBackend('fix-slides', slides.value, useGPT4.value);
+        }
+      } catch (error) {
+        // Handle any errors here, like network issues or server errors.
+        console.error("Error while fixing slides:", error);
       }
       loading.value = false;
     }
@@ -113,13 +118,21 @@ export default {
 
     const reviewFlow = async () => {
       loading.value = true;
-      flowReview.value = await sendSlidesToBackend('review-flow', updatedSlides.value, useGPT4.value);
+      try {
+        flowReview.value = await sendSlidesToBackend('review-flow', updatedSlides.value, useGPT4.value);
+      } catch (error) {
+        console.error("Error while reviewing flow:", error);
+      }
       loading.value = false;
     }
 
     const writeExecSum = async () => {
       loading.value = true;
-      execSum.value = await sendSlidesToBackend('write-execsum', updatedSlides.value, useGPT4.value);
+      try {
+        execSum.value = await sendSlidesToBackend('write-execsum', updatedSlides.value, useGPT4.value);
+      } catch (error) {
+        console.error("Error while writing executive summary:", error);
+      }
       loading.value = false;
     }
 
