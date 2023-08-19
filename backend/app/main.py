@@ -9,7 +9,7 @@ import io
 import json
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/*": {"origins": "https://main--teal-conkies-5d8062.netlify.app"}})
+CORS(app)
 
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
