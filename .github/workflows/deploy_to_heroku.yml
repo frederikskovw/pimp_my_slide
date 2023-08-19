@@ -1,0 +1,22 @@
+name: Deploy to Heroku
+
+on:
+  push:
+    branches:
+      - main  # Adjust this if your default branch is named differently
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Deploy to Heroku
+      run: |
+        git subtree split --prefix backend -b temporary-heroku-deployment-branch
+        git push -f https://heroku:${{secrets.HEROKU_API_TOKEN}}@git.heroku.com/pimp-my-slide-backend.git temporary-heroku-deployment-branch:master
+        git branch -D temporary-heroku-deployment-branch
+      env:
+        HEROKU_API_TOKEN: ${{secrets.HEROKU_API_TOKEN}}
