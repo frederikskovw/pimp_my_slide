@@ -3,26 +3,30 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from dotenv import load_dotenv
 from app.models import FixSlides
-from app.templates import FIX_LEAD_IN_TEMPLATE, FIX_BODY_TEMPLATE, REVIEW_DATA_TEMPLATE, REVIEW_HORIZONTAL_FLOW_TEMPLATE, REVIEW_VERTICAL_FLOW_TEMPLATE, WRITE_EXECSUM_TEMPLATE
+from app.templates import (FIX_LEAD_IN_TEMPLATE, FIX_BODY_TEMPLATE, REVIEW_DATA_TEMPLATE,
+                           REVIEW_HORIZONTAL_FLOW_TEMPLATE, REVIEW_VERTICAL_FLOW_TEMPLATE, WRITE_EXECSUM_TEMPLATE)
 from docx import Document
 import logging
 import io
 import json
 from celery import Celery
-from app.celery_config import CELERY_BROKER_URL, CELERY_RESULT_BACKEND
+from config import Config
 
-app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "https://main--teal-conkies-5d8062.netlify.app"}})
-logging.basicConfig(level=logging.DEBUG)
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object(Config)
+    CORS(app, resources={r"/*": {"origins": "https://main--teal-conkies-5d8062.netlify.app"}})
+    logging.basicConfig(level=logging.DEBUG)
 
-app.config['CELERY_BROKER_URL'] = CELERY_BROKER_URL
-app.config['CELERY_RESULT_BACKEND'] = CELERY_RESULT_BACKEND
-
-celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
-celery.conf.update(app.config)
+    return app
 
 load_dotenv()
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+app = create_app()
+
+OPENAI_API_KEY = app.config['OPENAI_API_KEY']
+
+celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'], backend=app.config['CELERY_RESULT_BACKEND'])
+celery.conf.update(app.config)
 
 # Function to initiate the celery task for fixing slides
 @celery.task(bind=True)
@@ -142,4 +146,4 @@ def task_status(task_id):
     return jsonify(response)
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
+    app.run(host='0.0.0.0', port=int(os.getenv('PORT', 5000)))
