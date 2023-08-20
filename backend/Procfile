@@ -1,2 +1,2 @@
-web: python app/main.py
-worker: celery -A app.main:celery worker
+web: export PYTHONPATH=/app:$PYTHONPATH && python app/main.py
+worker: export PYTHONPATH=/app:$PYTHONPATH && celery -A app.main:celery worker
