@@ -9,7 +9,7 @@ import logging
 import io
 import json
 from celery import Celery
-from celery_config import CELERY_BROKER_URL, CELERY_RESULT_BACKEND
+from app.celery_config import CELERY_BROKER_URL, CELERY_RESULT_BACKEND
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "https://main--teal-conkies-5d8062.netlify.app"}})
