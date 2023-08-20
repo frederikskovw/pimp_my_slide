@@ -23,6 +23,8 @@ const sendSlidesToBackend = async (endpoint, slides, useGPT4, wordDoc = null) =>
         const statusResponse = await axios.get(`/api/task-status/${taskId}`);
         const taskState = statusResponse.data.state;
 
+        console.log("Task State:", taskState);
+
         if (taskState !== "PENDING") {
           resolve(statusResponse.data.status);
         } else {

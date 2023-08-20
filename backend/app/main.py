@@ -62,6 +62,7 @@ def fix_slides_task(self, files, form):
 @app.route('/fix-slides', methods=['POST'])
 def fix_slides():
     task = fix_slides_task.apply_async(args=[request.files, request.form])
+    logging.debug(f"Task {task.id} initiated for /fix-slides endpoint.")
     return jsonify({"message": "Processing request", "task_id": task.id}), 202
 
 # Function to initiate the celery task for review flow
@@ -89,6 +90,7 @@ def review_flow_task(self, form):
 @app.route('/review-flow', methods=['POST'])
 def review_flow():
     task = review_flow_task.apply_async(args=[request.form])
+    logging.debug(f"Task {task.id} initiated for /review-flow endpoint.")
     return jsonify({"message": "Processing request", "task_id": task.id}), 202
 
 # Function to initiate the celery task for writing exec sum
@@ -111,6 +113,7 @@ def write_execsum_task(self, form):
 @app.route('/write-execsum', methods=['POST'])
 def write_execsum():
     task = write_execsum_task.apply_async(args=[request.form])
+    logging.debug(f"Task {task.id} initiated for /write-execsum endpoint.")
     return jsonify({"message": "Processing request", "task_id": task.id}), 202
 
 # Polling endpoint that allows the client to poll for task status/results
