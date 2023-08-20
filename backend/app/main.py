@@ -29,7 +29,7 @@ celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'], backend=app.co
 celery.conf.update(app.config)
 
 # Function to initiate the celery task for fixing slides
-@celery.task(bind=True)
+@celery.task(bind=True, name='app.main.fix_slides_task')
 def fix_slides_task(self, files, form):
     logging.info("Received a request at /fix-slides")
     if 'wordDoc' in files:
@@ -70,7 +70,7 @@ def fix_slides():
     return jsonify({"message": "Processing request", "task_id": task.id}), 202
 
 # Function to initiate the celery task for review flow
-@celery.task(bind=True)
+@celery.task(bind=True, name='app.main.review_flow_task')
 def review_flow_task(self, form):
     logging.info("Received a request at /review-flow")
     updated_slides = json.loads(form['slides'])
@@ -98,7 +98,7 @@ def review_flow():
     return jsonify({"message": "Processing request", "task_id": task.id}), 202
 
 # Function to initiate the celery task for writing exec sum
-@celery.task(bind=True)
+@celery.task(bind=True, name='app.main.write_execsum_task')
 def write_execsum_task(self, form):
     logging.info("Received a request at /write-execsum")
     updated_slides = json.loads(form['slides'])
