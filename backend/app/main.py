@@ -5,18 +5,18 @@ from dotenv import load_dotenv
 from app.models import FixSlides
 from app.templates import (FIX_LEAD_IN_TEMPLATE, FIX_BODY_TEMPLATE, REVIEW_DATA_TEMPLATE,
                            REVIEW_HORIZONTAL_FLOW_TEMPLATE, REVIEW_VERTICAL_FLOW_TEMPLATE, WRITE_EXECSUM_TEMPLATE)
-from docx import Document
 import logging
 import io
 import json
 from celery import Celery
 from app.config import Config
+import gc
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
     CORS(app, resources={r"/*": {"origins": "https://main--teal-conkies-5d8062.netlify.app"}})
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging.INFO)
 
     return app
 
@@ -34,18 +34,20 @@ def fix_slides_task(self, files, form):
     logging.info("Received a request at /fix-slides")
     if 'wordDoc' in files:
         logging.info("Word doc found")
+        from docx import Document
         word_file = files['wordDoc']
         doc = Document(io.BytesIO(word_file.read()))
         slides_string = "\n\n".join([para.text for para in doc.paragraphs if para.text])
     else:
         logging.info("Word doc not found")
-        slides = json.loads(form['slides'])
-        slides_string = ""
-        for i, slide in enumerate(slides):
-            slides_string += f"Slide {i+1}\n"
-            slides_string += f"Lead in: < {slide['leadIn']} >\n"
-            slides_string += f"Body: < {slide['content']} >\n"
-            slides_string += f"Data: < {slide['data']} >\n\n"
+        slides_data = json.loads(form['slides'])
+        slides = []
+        for i, slide in enumerate(slides_data):
+            slides.append(f"Slide {i+1}\n")
+            slides.append(f"Lead in: < {slide['leadIn']} >\n")
+            slides.append(f"Body: < {slide['content']} >\n")
+            slides.append(f"Data: < {slide['data']} >\n\n")
+        slides_string = "".join(slides)
 
     use_gpt4 = form['useGPT4'] == "true"
     model_name = "gpt-4" if use_gpt4 else "gpt-3.5-turbo-16k"
@@ -60,6 +62,8 @@ def fix_slides_task(self, files, form):
     slides_string_updated_body_and_lead_ins = fix_slides_instance.call_model(slides_string_updated_body, FIX_LEAD_IN_TEMPLATE)
     logging.info("Calling model to fix data")
     slides_string_updated_body_and_lead_ins_and_review_data = fix_slides_instance.call_model(slides_string_updated_body_and_lead_ins, REVIEW_DATA_TEMPLATE)
+
+    gc.collect()
 
     return slides_string_updated_body_and_lead_ins_and_review_data
 
@@ -86,6 +90,8 @@ def review_flow_task(self, form):
     logging.info("Calling model to review vertical flow")
     vertical_flow_review = fix_slides_instance.call_model(updated_slides, REVIEW_VERTICAL_FLOW_TEMPLATE)
 
+    gc.collect()
+
     return {
         "horizontalFlowReview": horizontal_flow_review,
         "verticalFlowReview": vertical_flow_review
@@ -111,6 +117,8 @@ def write_execsum_task(self, form):
 
     logging.info("Calling model to write exec sum")
     exec_sum = fix_slides_instance.call_model(updated_slides, WRITE_EXECSUM_TEMPLATE)
+    
+    gc.collect()
 
     return exec_sum
 
