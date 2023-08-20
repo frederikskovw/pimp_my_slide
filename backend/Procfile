@@ -1,2 +1,2 @@
 web: python app/main.py
-worker: celery -A backend.app.main:celery worker
+worker: celery -A app.main:celery worker
