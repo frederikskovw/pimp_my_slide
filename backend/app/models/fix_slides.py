@@ -1,4 +1,4 @@
-from services import chat_model_deterministic, chat_prompt_template
+from app.services import chat_model_deterministic, chat_prompt_template
 
 class FixSlides:
     def __init__(self, key, model_name):

@@ -2,8 +2,8 @@ import os
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from dotenv import load_dotenv
-from models import FixSlides
-from templates import FIX_LEAD_IN_TEMPLATE, FIX_BODY_TEMPLATE, REVIEW_DATA_TEMPLATE, REVIEW_HORIZONTAL_FLOW_TEMPLATE, REVIEW_VERTICAL_FLOW_TEMPLATE, WRITE_EXECSUM_TEMPLATE
+from app.models import FixSlides
+from app.templates import FIX_LEAD_IN_TEMPLATE, FIX_BODY_TEMPLATE, REVIEW_DATA_TEMPLATE, REVIEW_HORIZONTAL_FLOW_TEMPLATE, REVIEW_VERTICAL_FLOW_TEMPLATE, WRITE_EXECSUM_TEMPLATE
 from docx import Document
 import logging
 import io
