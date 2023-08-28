@@ -24,20 +24,19 @@ Follow the setup instructions based on your operating system:
 **III. Running the Application**
 
 **III.A For macOS:**
-1. Open the Terminal (search for "terminal.app" in Spotlight Search (Command+Space to open)).
-2. Copy and paste this into the Terminal to navigate to the project directory:
-_cd Desktop/Pimp My Slide_
-3. (On setup) Grant execute permissions to the script by copy and pasting this into the Terminal:
-_chmod +x start_app.sh_
-4. Copy and paste this into the Terminal to execute the script:
-_./start_app.sh_
+Currently only supported directly from IDE
+1. Setup
+- setup backend: cd backend > pip install -r requirements
+- setup frontend: cd frontend > npm install
+2. Run
+- start backend: python backend\app\main.py
+- start frontend: cd frontend > npm run serve
 
 **III.B For Windows systems:**
-1. Open the Command Prompt (search for "cmd" in the Windows search bar).
-2. Copy and paste this into the Command Prompt to navigate to the project directory (if not on desktop, or if you renamed the folder, adjust the navigation to the folder's path accordingly):
-_cd Desktop\pimp_my_slide-local_
-3. Copy and paste this into the Command Prompt to execute the script:
-_start_app.bat_
+1. Setup (only need to do this once, after download): Double-click _app_setup.bat_ file in the root directory of app
+2. Run
+- Double-click _start_backend.bat_
+- Double-click _start_frontend.bat_ > go to url _localhost:8080_ in your default webbrowser
 
 **IV. Additional Information**
 
