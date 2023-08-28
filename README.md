@@ -35,7 +35,7 @@ Currently only supported directly from IDE
 
 **III.B For Windows systems:**
 1. Setup (only need to do this once, after download):
-- - add OPENAI API KEY. Go to the backend folder and replace _sk-XXXX_ in the file .env-template with your actual OPENAI API KEY. Remove _-template_ from the file name, so it is just called .env
+- add OPENAI API KEY. Go to the backend folder and replace _sk-XXXX_ in the file .env-template with your actual OPENAI API KEY. Remove _-template_ from the file name, so it is just called .env
 - Double-click _app_setup.bat_ file in the root directory of app
 3. Run
 - Double-click _start_backend.bat_
