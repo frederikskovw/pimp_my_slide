@@ -26,6 +26,7 @@ Follow the setup instructions based on your operating system:
 **III.A For macOS:**
 Currently only supported directly from IDE
 1. Setup
+- add OPENAI API KEY. Go to the backend folder and replace _sk-XXXX_ in the file .env-template with your actual OPENAI API KEY. Remove _-template_ from the file name, so it is just called .env
 - setup backend: cd backend > pip install -r requirements
 - setup frontend: cd frontend > npm install
 2. Run
@@ -33,8 +34,10 @@ Currently only supported directly from IDE
 - start frontend: cd frontend > npm run serve
 
 **III.B For Windows systems:**
-1. Setup (only need to do this once, after download): Double-click _app_setup.bat_ file in the root directory of app
-2. Run
+1. Setup (only need to do this once, after download):
+- - add OPENAI API KEY. Go to the backend folder and replace _sk-XXXX_ in the file .env-template with your actual OPENAI API KEY. Remove _-template_ from the file name, so it is just called .env
+- Double-click _app_setup.bat_ file in the root directory of app
+3. Run
 - Double-click _start_backend.bat_
 - Double-click _start_frontend.bat_ > go to url _localhost:8080_ in your default webbrowser
 
