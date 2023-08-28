@@ -2,7 +2,7 @@
 
 **I. Downloading and Extracting the Project**
 
-1. Navigate to the Pimp My Slide project on GitHub: Pimp My Slide GitHub Repo.
+1. Navigate to the Pimp My Slide project on GitHub: [Pimp My Slide GitHub Repo](https://github.com/frederikskovw/pimp_my_slide/tree/local).
 2. Ensure you are on the "local" branch. If not, select it from the branch dropdown menu.
 3. On the top right, find the green button labeled Code and click on it.
 4. From the dropdown menu, select Download ZIP.
