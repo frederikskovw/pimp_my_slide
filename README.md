@@ -34,8 +34,8 @@ _./start_app.sh_
 
 **III.B For Windows systems:**
 1. Open the Command Prompt (search for "cmd" in the Windows search bar).
-2. Copy and paste this into the Command Prompt to navigate to the project directory:
-_cd Desktop\Pimp My Slide_
+2. Copy and paste this into the Command Prompt to navigate to the project directory (if not on desktop, or if you renamed the folder, adjust the navigation to the folder's path accordingly):
+_cd Desktop\pimp_my_slide-local_
 3. Copy and paste this into the Command Prompt to execute the script:
 _start_app.bat_
 
